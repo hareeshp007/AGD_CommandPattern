@@ -18,9 +18,12 @@ namespace Command.UI
         [SerializeField] private Color ActionSelectionOverlayColor;
         [SerializeField] private Image backgroundImage;
 
+        [SerializeField] Button undoButton;
+
         public void SetController(GameplayUIController controllerToSet) 
         {
             controller = controllerToSet;
+            undoButton.onClick.AddListener(controller.OnUndoButtonClicked);
             missedText.canvasRenderer.SetAlpha(0);
         }
 
@@ -83,6 +86,7 @@ namespace Command.UI
             backgroundImage.gameObject.SetActive(true);
             backgroundImage.sprite = bgSprite;
         } 
+
     }
 
     [Serializable]

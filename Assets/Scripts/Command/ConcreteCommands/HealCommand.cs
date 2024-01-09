@@ -5,6 +5,7 @@ namespace Command.Commands
     public class HealCommand : UnitCommand
     {
         private bool willHitTarget;
+        private int previousHealth;
 
         public HealCommand(CommandData commandData)
         {
@@ -15,12 +16,15 @@ namespace Command.Commands
         {
             if (willHitTarget)
             {
-                targetUnit.TakeDamage(actorUnit.CurrentPower);
+                targetUnit.RestoreHealth(previousHealth-targetUnit.CurrentHealth);
                 actorUnit.Owner.ResetCurrentActiveUnit();
             }
         }
-        public override void Execute() => GameService.Instance.ActionService.GetActionByType(CommandType.Heal).PerformAction(actorUnit, targetUnit, willHitTarget);
-
+        public override void Execute()
+        {
+            previousHealth = targetUnit.CurrentHealth;
+            GameService.Instance.ActionService.GetActionByType(CommandType.Heal).PerformAction(actorUnit, targetUnit, willHitTarget);
+        }
         public override bool WillHitTarget() => true;
     }
 }
