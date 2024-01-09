@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Command.Actions;
+using Command.Main;
 
-public class AttackStanceAction : MonoBehaviour
+public class AttackStanceAction : UnitCommand
 {
-    // Start is called before the first frame update
-    void Start()
+    private bool willHitTarget;
+    public AttackStanceAction(CommandData commandData)
     {
-        
+        this.commandData = commandData;
+        willHitTarget = WillHitTarget();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public override bool WillHitTarget() => true;
+
+    public override void Execute() => GameService.Instance.ActionService.GetActionByType(CommandType.Attack).PerformAction(actorUnit, targetUnit, willHitTarget);
+
 }

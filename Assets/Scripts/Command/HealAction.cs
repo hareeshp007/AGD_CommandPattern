@@ -4,7 +4,7 @@ using Command.Main;
 public class HealAction : UnitCommand
 {
     private bool willHitTarget;
-    public void AttackCommand(CommandData commandData)
+    public HealAction(CommandData commandData)
     {
         this.commandData = commandData;
         willHitTarget = WillHitTarget();

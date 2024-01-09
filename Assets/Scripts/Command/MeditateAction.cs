@@ -4,7 +4,7 @@ using Command.Main;
 public class MeditateAction : UnitCommand
 {
     private bool willHitTarget;
-    public void AttackCommand(CommandData commandData)
+    public MeditateAction(CommandData commandData)
     {
         this.commandData = commandData;
         willHitTarget = WillHitTarget();

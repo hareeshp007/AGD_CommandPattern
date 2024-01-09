@@ -6,7 +6,8 @@ using Command.Main;
 public class AttackAction : UnitCommand
 {
     private bool willHitTarget;
-    public void AttackCommand(CommandData commandData)
+
+    public AttackAction(CommandData commandData)
     {
         this.commandData = commandData;
         willHitTarget = WillHitTarget();

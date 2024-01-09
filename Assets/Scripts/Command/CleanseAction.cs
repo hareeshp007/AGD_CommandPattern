@@ -4,7 +4,7 @@ using Command.Main;
 public class CleanseAction : UnitCommand
 {
     private bool willHitTarget;
-    public void AttackCommand(CommandData commandData)
+    public CleanseAction(CommandData commandData)
     {
         this.commandData = commandData;
         willHitTarget = WillHitTarget();

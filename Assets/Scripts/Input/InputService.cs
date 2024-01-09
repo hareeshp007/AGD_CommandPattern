@@ -1,6 +1,7 @@
 using Command.Main;
 using Command.Player;
 using Command.Actions;
+using Unity.IO.LowLevel.Unsafe;
 
 namespace Command.Input
 {
@@ -49,7 +50,42 @@ namespace Command.Input
         public void OnTargetSelected(UnitController targetUnit)
         {
             SetInputState(InputState.EXECUTING_INPUT);
+            UnitCommand commandToProcess = CreateUnitCommand(targetUnit);
+            GameService.Instance.ProcessUnitCommand(commandToProcess);
             GameService.Instance.PlayerService.PerformAction(selectedCommandType, targetUnit,isSuccessful);
+        }
+        private CommandData CreateCommandData(UnitController targetUnit)
+        {
+            return new CommandData(
+                GameService.Instance.PlayerService.ActiveUnitID,
+                targetUnit.UnitID,
+                GameService.Instance.PlayerService.ActivePlayerID,
+                targetUnit.Owner.PlayerID
+            );
+        }
+        private UnitCommand CreateUnitCommand(UnitController targetUnit)
+        {
+            CommandData commandData = CreateCommandData(targetUnit);
+            switch (selectedCommandType)
+            {
+                case CommandType.Attack:
+                    return new AttackAction(commandData);
+                case CommandType.Heal:
+                    return new HealAction(commandData);
+                case CommandType.AttackStance:
+                    return new AttackStanceAction(commandData);
+                case CommandType.Cleanse:
+                    return new CleanseAction(commandData);
+                case CommandType.BerserkAttack:
+                    return new BerserkAttackAction(commandData);
+                case CommandType.Meditate:
+                    return new MeditateAction(commandData);
+                case CommandType.ThirdEye:
+                    return new ThirdEyeAction(commandData);
+                default:
+                    // If the selectedCommandType is not recognized, throw an exception.
+                    throw new System.Exception($"No Command found of type: {selectedCommandType}");
+            }
         }
     }
 }

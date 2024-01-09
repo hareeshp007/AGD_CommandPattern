@@ -4,7 +4,7 @@ using Command.Main;
 public class BerserkAttackAction : UnitCommand
 {
     private bool willHitTarget;
-    public void AttackCommand(CommandData commandData)
+    public BerserkAttackAction(CommandData commandData)
     {
         this.commandData = commandData;
         willHitTarget = WillHitTarget();

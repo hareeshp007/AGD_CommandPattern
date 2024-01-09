@@ -4,7 +4,7 @@ using Command.Main;
 public class ThirdEyeAction : UnitCommand
 {
     private bool willHitTarget;
-    public void AttackCommand(CommandData commandData)
+    public ThirdEyeAction(CommandData commandData)
     {
         this.commandData = commandData;
         willHitTarget = WillHitTarget();
